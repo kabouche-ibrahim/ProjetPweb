@@ -1,54 +1,29 @@
-# Get started with Vue.js and MapLibre GL JS
+# pwebcovoiturage
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+This template should help get you started developing with Vue 3 in Vite.
 
-Quick way to star a web map application with MapLibre GL JS using Vue.js.
+## Recommended IDE Setup
 
-A simple fullscreen map application as an example on how to use MapTiler maps together with Vue.js and MapLibre GL JS for your own Vue.js app.
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-1. Clone this repo 
- 
-  ```sh
-    git clone https://github.com/maptiler/get-started-vuejs-maplibre-gl-js.git my-vuejs-map
-  ```
+## Customize configuration
 
-2. Navigate to the newly created project folder **my-vuejs-map**
-  ```sh
-    cd my-vuejs-map
-  ```
+See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-3. Install dependencies
-  ```sh
-    npm install
-  ```
+## Project Setup
 
-4. :warning: Open the App.vue file and replace **YOUR_MAPTILER_API_KEY_HERE** with your actual [MapTiler API key](https://cloud.maptiler.com/account/keys/).
+```sh
+npm install
+```
 
-  :information_source: If you don't have an API KEY you can create it for **FREE** at https://www.maptiler.com/cloud/
+### Compile and Hot-Reload for Development
 
-5. Start your local environment
-  ```sh
-    npm run serve
-  ```
+```sh
+npm run dev
+```
 
-6. You will find your app on address http://localhost:8080/. Now you should see the map in your browser.
+### Compile and Minify for Production
 
-## Build With
-
-* [Vue.js](https://vuejs.io/start)
-* [MapLibre GL JS](https://maplibre.org/)
-* [MapTiler](https://www.maptiler.com/)
-* [vue-maplibre-gl](https://www.npmjs.com/package/vue-maplibre-gl)
-
-This project was generated with [Vue.js CLI](https://cli.vuejs.org/).
-
-## Learn More
-
-You can learn more at [How to display a map in Vue.js using MapLibre GL JS](https://docs.maptiler.com/vuejs/maplibre-gl-js/how-to-use-maplibre-gl-js/?utm_medium=referral&utm_source=github&utm_campaign=2022-05%20%7C%20js%20frameworks%20%7C%20vue.js%20).
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
+```sh
+npm run build
+```
