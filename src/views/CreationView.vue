@@ -4,9 +4,11 @@
       <div id="map" class="w-full h-full"></div>
       <input v-model="departureLocation" @input="placeMarker(departureLocation, 'departure')" placeholder="Departure Location" class="absolute right-0 z-10 p-2 bg-white border rounded shadow top-4">
       <input v-model="destinationLocation" @input="placeMarker(destinationLocation, 'destination')" placeholder="Destination Location" class="absolute right-0 z-10 p-2 bg-white border rounded shadow top-16">
+      <input v-model="departureDate" type="date" placeholder="Departure Date" class="absolute right-0 z-10 p-2 bg-white border rounded shadow top-28">
+      <input v-model="departureTime" type="time" placeholder="Departure Time" class="absolute right-0 z-10 p-2 bg-white border rounded shadow top-40">
     </div>
     <div class="w-1/3 p-6">
-      <!-- Your content here... -->
+      
     </div>
   </div>
 </template>
@@ -20,6 +22,8 @@ const apiKey = '9xyeBAMniGG3nejL4QIL';
 const map = ref(null);
 const departureLocation = ref('');
 const destinationLocation = ref('');
+const departureDate = ref('');
+const departureTime = ref('');
 
 const placeMarker = async (location, type) => {
   if (!location) return;
@@ -84,14 +88,15 @@ const onMapClick = (e) => {
 }
 
 #map {
-  z-index: 1; /* Ensure the map is above the input */
+  z-index: 1;
+  width: 80%;
+  height: 500px; /* Set the height explicitly */
 }
 
 .absolute {
   right: -15rem;
   z-index: 10; /* Set a higher z-index for the input to appear above the map */
   position: absolute;
-  top: 4;
   padding: 2;
   background-color: white;
   border: 1px solid #e2e8f0;
