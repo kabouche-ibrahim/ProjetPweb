@@ -2,8 +2,22 @@
   <div class="flex">
     <div class="relative w-2/3 h-screen">
       <div id="map" class="w-full h-full"></div>
-      <input v-model="departureLocation" @input="placeMarker(departureLocation, 'departure')" placeholder="Departure Location" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-4">
-      <input v-model="destinationLocation" @input="placeMarker(destinationLocation, 'destination')" placeholder="Destination Location" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-16">
+      <div class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-4">
+        <input v-model="departureLocation" @input="searchLocation(departureLocation, 'departure')" placeholder="Departure Location">
+        <div v-for="(suggestion, index) in departureSuggestions" :key="index">
+          <button @click="selectSuggestion(suggestion, 'departure')" class="block w-full px-2 py-1 text-left hover:bg-gray-200">
+            {{ suggestion.display_name }}
+          </button>
+        </div>
+      </div>
+      <div class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-16">
+        <input v-model="destinationLocation" @input="searchLocation(destinationLocation, 'destination')" placeholder="Destination Location">
+        <div v-for="(suggestion, index) in destinationSuggestions" :key="index">
+          <button @click="selectSuggestion(suggestion, 'destination')" class="block w-full px-2 py-1 text-left hover:bg-gray-200">
+            {{ suggestion.display_name }}
+          </button>
+        </div>
+      </div>
       <input v-model="departureDate" type="date" placeholder="Departure Date" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-28">
       <input v-model="departureTime" type="time" placeholder="Departure Time" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
 
@@ -31,6 +45,37 @@ const departureLocation = ref('');
 const destinationLocation = ref('');
 const departureDate = ref('');
 const departureTime = ref('');
+const departureSuggestions = ref([]);
+const destinationSuggestions = ref([]);
+
+const searchLocation = async (query, type) => {
+  if (!query) return;
+
+  try {
+    const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5`);
+    const data = await response.json();
+
+    if (type === 'departure') {
+      departureSuggestions.value = data;
+    } else {
+      destinationSuggestions.value = data;
+    }
+  } catch (error) {
+    console.error(`Error fetching location suggestions: ${error.message}`);
+  }
+};
+
+const selectSuggestion = (suggestion, type) => {
+  if (type === 'departure') {
+    departureLocation.value = suggestion.display_name;
+    departureSuggestions.value = [];
+  } else {
+    destinationLocation.value = suggestion.display_name;
+    destinationSuggestions.value = [];
+  }
+
+  placeMarker(suggestion.display_name, type);
+};
 
 const departureIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
