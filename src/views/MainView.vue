@@ -1,13 +1,32 @@
 <template>
-    <div class="pt-16">
-      <h1 class="mb-4 text-3xl font-semibold">Covoiturage</h1>
-      <div class="max-w-sm mx-auto overflow-hidden text-left shadow sm:rounded-md">
+    <div class="pt-8">
+      <div class="flex items-center justify-between px-4">
+        <div class="flex items-center">
+         <img src="@/views/logo.png" alt="Logo" class="w-10 h-10 mr-2"> 
+          
+          <h1 class="text-xl font-semibold">Covoiturage</h1>
+        </div>
+        <router-link to="/LoginPage" class="px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none">
+          Logout
+        </router-link>
+      </div>
+      <div class="max-w-2xl mx-auto overflow-hidden text-left shadow sm:rounded-md ">
         <div class="px-4 py-5 bg-white sm:p-6">
           <div class="flex justify-between">
             <router-link to="/Creation" tag="button" type="button"
                 class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none"
             >
                 Create Ride
+            </router-link>
+            <router-link to="/MyRides" tag="button" type="button"
+              class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none"
+            >
+              My Rides
+            </router-link>
+            <router-link to="/MyReservations" tag="button" type="button"
+              class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none"
+            >
+              My Reservations
             </router-link>
             <button
               class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none"
@@ -19,7 +38,7 @@
       </div>
   
       <!-- Table with Search Bar -->
-      <div class="max-w-full mx-auto mt-8">
+      <div class="max-w-full mx-auto mt-24 mb-10 overflow-y-auto" style="max-height: 300px;">
         <input
           type="text"
           class="float-right p-2 border rounded-md"
@@ -38,6 +57,78 @@
           </thead>
           <tbody>
             <!-- Add more rows as needed -->
+            <tr>
+              <td class="p-3 text-center border">Algiers</td>
+              <td class="p-3 text-center border">Blida</td>
+              <td class="p-3 text-center border">2024-01-27</td>
+              <td class="p-3 text-center border">15:00</td>
+              <td class="p-3 text-center border">4</td>
+              <td class="p-3 text-center border">
+                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                  View Details
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3 text-center border">Algiers</td>
+              <td class="p-3 text-center border">Blida</td>
+              <td class="p-3 text-center border">2024-01-27</td>
+              <td class="p-3 text-center border">15:00</td>
+              <td class="p-3 text-center border">4</td>
+              <td class="p-3 text-center border">
+                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                  View Details
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3 text-center border">Algiers</td>
+              <td class="p-3 text-center border">Blida</td>
+              <td class="p-3 text-center border">2024-01-27</td>
+              <td class="p-3 text-center border">15:00</td>
+              <td class="p-3 text-center border">4</td>
+              <td class="p-3 text-center border">
+                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                  View Details
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3 text-center border">Algiers</td>
+              <td class="p-3 text-center border">Blida</td>
+              <td class="p-3 text-center border">2024-01-27</td>
+              <td class="p-3 text-center border">15:00</td>
+              <td class="p-3 text-center border">4</td>
+              <td class="p-3 text-center border">
+                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                  View Details
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3 text-center border">Algiers</td>
+              <td class="p-3 text-center border">Blida</td>
+              <td class="p-3 text-center border">2024-01-27</td>
+              <td class="p-3 text-center border">15:00</td>
+              <td class="p-3 text-center border">4</td>
+              <td class="p-3 text-center border">
+                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                  View Details
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3 text-center border">Algiers</td>
+              <td class="p-3 text-center border">Blida</td>
+              <td class="p-3 text-center border">2024-01-27</td>
+              <td class="p-3 text-center border">15:00</td>
+              <td class="p-3 text-center border">4</td>
+              <td class="p-3 text-center border">
+                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                  View Details
+                </button>
+              </td>
+            </tr>
             <tr>
               <td class="p-3 text-center border">Algiers</td>
               <td class="p-3 text-center border">Blida</td>
@@ -69,7 +160,7 @@
   
             <h3 class="mt-4 text-lg font-semibold">Meeting Place</h3>
             
-            
+            <div id="mapid" style="height: 180px;"></div>
 
   
             <h3 class="mt-4 text-lg font-semibold">Destination</h3>
@@ -108,12 +199,23 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useRouter } from 'vue-router';
+  import { map, tileLayer } from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
   
   const router = useRouter();
   
+  onMounted(() => {
+  // Center the map on Algeria
+  map.value = L.map('map').setView([36.731538, 3.087544], 10);
 
+  L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?access_token=${apiKey}`, {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map.value);
+
+  map.value.on('click', onMapClick);
+}); 
   
   const showFormFlag = ref(false);
   const showConfirmationFlag = ref(false);

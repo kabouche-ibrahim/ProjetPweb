@@ -4,6 +4,8 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import MainView from '../views/MainView.vue'
 import CreationView from '../views/CreationView.vue'
+import MyRidesView from '../views/MyRidesView.vue'
+import MyReservationView  from '../views/MyReservationView.vue'
 
 const router = createRouter({  
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +29,16 @@ const router = createRouter({
       path: '/creation',
       name: 'creation',
       component: CreationView
+    },
+    {
+      path: '/myrides',
+      name: 'myrides',
+      component: MyRidesView
+    },
+    {
+      path: '/myreservation',
+      name: 'myreservation',
+      component: MyReservationView
     }
     
     
