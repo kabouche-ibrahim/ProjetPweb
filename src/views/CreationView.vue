@@ -206,11 +206,33 @@ const onMapClick = (e) => {
 .input-field {
   width: calc(40% - 4rem); /* Adjust the width as needed */
   margin-right: -2rem;
+  position: relative;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20; /* Increase the z-index */
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
 }
 
 .absolute {
   right: -15rem;
-  z-index: 10;
   position: absolute;
   padding: 2;
   background-color: white;

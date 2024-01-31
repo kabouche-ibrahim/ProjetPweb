@@ -6,7 +6,7 @@
           
           <h1 class="text-xl font-semibold">Covoiturage</h1>
         </div>
-        <router-link to="/LoginPage" class="px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none">
+        <router-link to="/" class="px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none">
           Logout
         </router-link>
       </div>
@@ -23,7 +23,7 @@
             >
               My Rides
             </router-link>
-            <router-link to="/MyReservations" tag="button" type="button"
+            <router-link to="/MyReservation" tag="button" type="button"
               class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none"
             >
               My Reservations
@@ -160,7 +160,7 @@
   
             <h3 class="mt-4 text-lg font-semibold">Meeting Place</h3>
             
-            <div id="mapid" style="height: 180px;"></div>
+            
 
   
             <h3 class="mt-4 text-lg font-semibold">Destination</h3>
@@ -201,21 +201,11 @@
   <script setup>
   import { onMounted, ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import { map, tileLayer } from 'leaflet';
-  import 'leaflet/dist/leaflet.css';
+  
   
   const router = useRouter();
   
-  onMounted(() => {
-  // Center the map on Algeria
-  map.value = L.map('map').setView([36.731538, 3.087544], 10);
-
-  L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?access_token=${apiKey}`, {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map.value);
-
-  map.value.on('click', onMapClick);
-}); 
+  
   
   const showFormFlag = ref(false);
   const showConfirmationFlag = ref(false);
