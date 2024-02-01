@@ -4,7 +4,7 @@
       <div id="map" class="w-full h-full"></div>
       <div class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-4">
         <input v-model="departureLocation" @input="searchLocation(departureLocation, 'departure')" placeholder="Departure Location">
-        <div v-for="(suggestion, index) in departureSuggestions" :key="index">
+        <div v-for="(suggestion, index) in departureSuggestions" :key="index" class="z-20">
           <button @click="selectSuggestion(suggestion, 'departure')" class="block w-full px-2 py-1 text-left hover:bg-gray-200">
             {{ suggestion.display_name }}
           </button>
@@ -12,7 +12,7 @@
       </div>
       <div class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-16">
         <input v-model="destinationLocation" @input="searchLocation(destinationLocation, 'destination')" placeholder="Destination Location">
-        <div v-for="(suggestion, index) in destinationSuggestions" :key="index">
+        <div v-for="(suggestion, index) in destinationSuggestions" :key="index" class="z-20">
           <button @click="selectSuggestion(suggestion, 'destination')" class="block w-full px-2 py-1 text-left hover:bg-gray-200">
             {{ suggestion.display_name }}
           </button>
