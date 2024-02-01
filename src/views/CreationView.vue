@@ -97,21 +97,21 @@ const destinationIcon = L.icon({
 });
 
 const placeMarker = async (location, type) => {
-  if (!location) return;
+  if (!location) return;  
 
   try {
     let lat, lon;
 
     // Check if the location is a string (clicked location) or an object (suggestion)
-    /*if (typeof location === 'string') {
-      const [latStr, lonStr] = location.split(',').map(coord => coord.trim());
-      lat = parseFloat(latStr);
-      lon = parseFloat(lonStr);
-    } else {
-      // Use the suggestion's lat and lon directly
-      lat = location.lat;
-      lon = location.lon;
-    }*/
+    if (typeof location === 'string') {
+    const [latStr, lonStr] = location.split(',').map(coord => coord.trim());
+    lat = parseFloat(latStr);
+    lon = parseFloat(lonStr);
+  } else {
+    // Use the suggestion's lat and lon directly
+    lat = location.lat;
+    lon = location.lon;
+}
 
     // Clear existing markers
     map.value.eachLayer((layer) => {
