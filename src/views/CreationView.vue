@@ -62,10 +62,13 @@ const searchLocation = async (query, type) => {
     }
   } catch (error) {
     console.error(`Error fetching location suggestions: ${error.message}`);
+    console.error('Check the network tab for more details.');
   }
 };
 
 const selectSuggestion = (suggestion, type) => {
+  let location = { lat: suggestion.lat, lon: suggestion.lon };
+  
   if (type === 'departure') {
     departureLocation.value = suggestion.display_name;
     departureSuggestions.value = [];
@@ -73,9 +76,11 @@ const selectSuggestion = (suggestion, type) => {
     destinationLocation.value = suggestion.display_name;
     destinationSuggestions.value = [];
   }
-
-  placeMarker(suggestion.display_name, type);
-};
+  
+  placeMarker(location, type);
+  
+  /*placeMarker({ lat: suggestion.lat, lon: suggestion.lon }, type);*/
+};  
 
 const departureIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
@@ -95,39 +100,40 @@ const placeMarker = async (location, type) => {
   if (!location) return;
 
   try {
-    const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`);
-    const data = await response.json();
+    let lat, lon;
 
-    if (data && data.length > 0) {
-      const { lat, lon } = data[0];
-      // Clear existing markers
-      map.value.eachLayer((layer) => {
-        if (layer instanceof L.Marker && layer.options.type === type) {
-          map.value.removeLayer(layer);
-        }
-      });
-
-      // Add a marker for the new location with the corresponding icon
-      const marker = L.marker([lat, lon], { type, icon: type === 'departure' ? departureIcon : destinationIcon }).addTo(map.value)
-        .bindPopup(`${type.charAt(0).toUpperCase() + type.slice(1)} at (${lat.toFixed(4)}, ${lon.toFixed(4)})`)
-        .openPopup();
-
-      // Get the bounds of the marker
-      const markerBounds = marker.getBounds();
-
-      // Zoom the map to the marker's bounds
-      map.value.fitBounds(markerBounds, { padding: [50, 50] });
-
-      // If the type is 'departure', zoom further to the departure location
-      if (type === 'departure') {
-        map.value.setView([lat, lon], 15);
-      }
+    // Check if the location is a string (clicked location) or an object (suggestion)
+    /*if (typeof location === 'string') {
+      const [latStr, lonStr] = location.split(',').map(coord => coord.trim());
+      lat = parseFloat(latStr);
+      lon = parseFloat(lonStr);
     } else {
-      // Show an error popup when the location is not found
-      L.popup()
-        .setLatLng(map.value.getCenter())
-        .setContent(`${type.charAt(0).toUpperCase() + type.slice(1)} location not found`)
-        .openOn(map.value);
+      // Use the suggestion's lat and lon directly
+      lat = location.lat;
+      lon = location.lon;
+    }*/
+
+    // Clear existing markers
+    map.value.eachLayer((layer) => {
+      if (layer instanceof L.Marker && layer.options.type === type) {
+        map.value.removeLayer(layer);
+      }
+    });
+
+    // Add a marker for the location with the corresponding icon
+    const marker = L.marker([lat, lon], { type, icon: type === 'departure' ? departureIcon : destinationIcon }).addTo(map.value)
+      .bindPopup(`${type.charAt(0).toUpperCase() + type.slice(1)} at (${lat.toFixed(4)}, ${lon.toFixed(4)})`)
+      .openPopup();
+
+    // Get the bounds of the marker
+    const markerBounds = marker.getBounds();
+
+    // Zoom the map to the marker's bounds
+    map.value.fitBounds(markerBounds, { padding: [50, 50] });
+
+    // If the type is 'departure', zoom further to the departure location
+    if (type === 'departure') {
+      map.value.setView([lat, lon], 15);
     }
   } catch (error) {
     // Show an error popup for fetch errors
@@ -137,6 +143,7 @@ const placeMarker = async (location, type) => {
       .openOn(map.value);
   }
 };
+
 
 const confirmLocation = () => {
   // Add your logic for confirming the location
@@ -174,7 +181,6 @@ onMounted(() => {
 
   map.value.on('click', onMapClick);
 });
-
 const onMapClick = (e) => {
   // Clear existing markers
   map.value.eachLayer((layer) => {
