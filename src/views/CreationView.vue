@@ -20,6 +20,19 @@
       </div>
       <input v-model="departureDate" type="date" placeholder="Departure Date" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-28">
       <input v-model="departureTime" type="time" placeholder="Departure Time" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
+      <div class="flex input-container">
+    <input
+      v-model="availablePlace"
+      type="text"
+      pattern="[1-9]\d*"
+      placeholder="Available Places"
+      class="p-2 bg-white border rounded shadow input-field"
+      @input="validateInput"
+    />
+    <p v-if="error" class="text-red-500">{{ error }}</p>
+  </div>
+
+
 
       <!-- Buttons -->
       <div class="absolute right-0 z-10 flex justify-center top-52">
@@ -78,8 +91,7 @@ const selectSuggestion = (suggestion, type) => {
   }
   
   placeMarker(location, type);
-  
-  /*placeMarker({ lat: suggestion.lat, lon: suggestion.lon }, type);*/
+
 };  
 
 const departureIcon = L.icon({
@@ -101,17 +113,8 @@ const placeMarker = async (location, type) => {
 
   try {
     let lat, lon;
-
-    // Check if the location is a string (clicked location) or an object (suggestion)
-    if (typeof location === 'string') {
-    const [latStr, lonStr] = location.split(',').map(coord => coord.trim());
-    lat = parseFloat(latStr);
-    lon = parseFloat(lonStr);
-  } else {
-    // Use the suggestion's lat and lon directly
     lat = location.lat;
     lon = location.lon;
-}
 
     // Clear existing markers
     map.value.eachLayer((layer) => {
@@ -122,19 +125,11 @@ const placeMarker = async (location, type) => {
 
     // Add a marker for the location with the corresponding icon
     const marker = L.marker([lat, lon], { type, icon: type === 'departure' ? departureIcon : destinationIcon }).addTo(map.value)
-      .bindPopup(`${type.charAt(0).toUpperCase() + type.slice(1)} at (${lat.toFixed(4)}, ${lon.toFixed(4)})`)
+      .bindPopup(`${type.charAt(0).toUpperCase() + type.slice(1)} at (${lat}, ${lon})`)
       .openPopup();
 
-    // Get the bounds of the marker
-    const markerBounds = marker.getBounds();
+   map.value.setView([lat,lon], 15);
 
-    // Zoom the map to the marker's bounds
-    map.value.fitBounds(markerBounds, { padding: [50, 50] });
-
-    // If the type is 'departure', zoom further to the departure location
-    if (type === 'departure') {
-      map.value.setView([lat, lon], 15);
-    }
   } catch (error) {
     // Show an error popup for fetch errors
     L.popup()
@@ -162,6 +157,9 @@ const resetLocation = () => {
     departureDate.value = '';
     departureTime.value = '';
 
+    map.value.setView([36.731538, 3.087544], 10);
+    
+
     // Clear existing markers
     map.value.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
@@ -176,22 +174,30 @@ onMounted(() => {
   map.value = L.map('map').setView([36.731538, 3.087544], 10);
 
   L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?access_token=${apiKey}`, {
-    attribution: '&copy; OpenStreetMap contributors'
+    attribution: '&copy;'
   }).addTo(map.value);
 
-  map.value.on('click', onMapClick);
 });
-const onMapClick = (e) => {
-  // Clear existing markers
-  map.value.eachLayer((layer) => {
-    if (layer instanceof L.Marker) {
-      map.value.removeLayer(layer);
-    }
-  });
 
-  // Add a marker for the clicked location
-  const { lat, lng } = e.latlng;
-  placeMarker(`${lat}, ${lng}`, 'clicked');
+
+
+
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      availablePlace: '',
+      error: '',
+    };
+  },
+  methods: {
+    validateInput() {
+      const isValid = /^[1-9]\d*$/.test(this.availablePlace);
+      this.error = isValid ? '' : 'Please enter a positive integer.';
+    },
+  },
 };
 </script>
 
@@ -245,5 +251,9 @@ const onMapClick = (e) => {
   border: 1px solid #e2e8f0;
   border-radius: 0.375rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-red-500 {
+  margin-top: 0.5rem;
 }
 </style>
