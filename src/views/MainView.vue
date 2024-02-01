@@ -45,7 +45,7 @@
           placeholder="Search..."
         />
         <table class="w-full mt-4 border border-collapse border-gray-300">
-          <thead>
+          <thead class="sticky top-0">
             <tr>
               <th class="p-3 text-center bg-gray-200 border-b">From</th>
               <th class="p-3 text-center bg-gray-200 border-b">To</th>
