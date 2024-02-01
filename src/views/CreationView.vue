@@ -88,7 +88,7 @@ const selectSuggestion = (suggestion, type) => {
   } else {
     destinationLocation.value = suggestion.display_name;
     destinationSuggestions.value = [];
-  }
+  }npm 
   
   placeMarker(location, type);
 
@@ -219,6 +219,7 @@ export default {
   width: calc(40% - 4rem); /* Adjust the width as needed */
   margin-right: -2rem;
   position: relative;
+  z-index: 20; /* Increase the z-index */
 }
 
 .suggestions {
@@ -226,7 +227,7 @@ export default {
   top: 100%;
   left: 0;
   right: 0;
-  z-index: 20; /* Increase the z-index */
+  z-index: 30; /* Increase the z-index */
   background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 0.375rem;
