@@ -2,37 +2,45 @@
   <div class="flex">
     <div class="relative w-2/3 h-screen">
       <div id="map" class="w-full h-full"></div>
+
+      <!-- Departure Location Input and Suggestions -->
       <div class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-4">
         <input v-model="departureLocation" @input="searchLocation(departureLocation, 'departure')" placeholder="Departure Location">
-        <div v-for="(suggestion, index) in departureSuggestions" :key="index" class="z-20">
+        <div v-for="(suggestion, index) in departureSuggestions" :key="index" class="z-20 suggestion-item">
           <button @click="selectSuggestion(suggestion, 'departure')" class="block w-full px-2 py-1 text-left hover:bg-gray-200">
             {{ suggestion.display_name }}
           </button>
         </div>
       </div>
+
+      <!-- Destination Location Input and Suggestions -->
       <div class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-16">
         <input v-model="destinationLocation" @input="searchLocation(destinationLocation, 'destination')" placeholder="Destination Location">
-        <div v-for="(suggestion, index) in destinationSuggestions" :key="index" class="z-20">
+        <div v-for="(suggestion, index) in destinationSuggestions" :key="index" class="z-20 suggestion-item">
           <button @click="selectSuggestion(suggestion, 'destination')" class="block w-full px-2 py-1 text-left hover:bg-gray-200">
             {{ suggestion.display_name }}
           </button>
         </div>
       </div>
+
+      <!-- Departure Date Input -->
       <input v-model="departureDate" type="date" placeholder="Departure Date" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-28">
+
+      <!-- Departure Time Input -->
       <input v-model="departureTime" type="time" placeholder="Departure Time" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
+
+      <!-- Available Places Input -->
       <div class="flex input-container">
-    <input
-      v-model="availablePlace"
-      type="text"
-      pattern="[1-9]\d*"
-      placeholder="Available Places"
-      class="p-2 bg-white border rounded shadow input-field"
-      @input="validateInput"
-    />
-    <p v-if="error" class="text-red-500">{{ error }}</p>
-  </div>
-
-
+        <input
+          v-model="availablePlace"
+          type="text"
+          pattern="[1-9]\d*"
+          placeholder="Available Places"
+          class="p-2 bg-white border rounded shadow input-field"
+          @input="validateInput"
+        />
+        <p v-if="error" class="text-red-500">{{ error }}</p>
+      </div>
 
       <!-- Buttons -->
       <div class="absolute right-0 z-10 flex justify-center top-52">
@@ -40,12 +48,12 @@
         <button @click="resetLocation" class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">Reset</button>
       </div>
     </div>
+
     <div class="w-1/3 p-6">
-      
+      <!-- Other content in the right column -->
     </div>
   </div>
 </template>
-
 
 <script setup>
 import { onMounted, ref } from 'vue';
@@ -60,6 +68,7 @@ const departureDate = ref('');
 const departureTime = ref('');
 const departureSuggestions = ref([]);
 const destinationSuggestions = ref([]);
+const availablePlace = ref('');
 
 const searchLocation = async (query, type) => {
   if (!query) return;
@@ -76,6 +85,11 @@ const searchLocation = async (query, type) => {
   } catch (error) {
     console.error(`Error fetching location suggestions: ${error.message}`);
     console.error('Check the network tab for more details.');
+
+    L.popup()
+      .setLatLng(map.value.getCenter()) // Set the popup location to the center of the map
+      .setContent(`Error fetching location suggestions: ${error.message}<br>Check the network tab for more details.`)
+      .openOn(map.value);
   }
 };
 
@@ -124,27 +138,36 @@ const placeMarker = async (location, type) => {
     });
 
     // Add a marker for the location with the corresponding icon
-    const marker = L.marker([lat, lon], { type, icon: type === 'departure' ? departureIcon : destinationIcon }).addTo(map.value)
-      .bindPopup(`${type.charAt(0).toUpperCase() + type.slice(1)} at (${lat}, ${lon})`)
-      .openPopup();
+    const marker = L.marker([lat, lon], { type, icon: type === 'departure' ? departureIcon : destinationIcon }).addTo(map.value);
 
    map.value.setView([lat,lon], 15);
 
   } catch (error) {
     // Show an error popup for fetch errors
-    L.popup()
-      .setLatLng(map.value.getCenter())
-      .setContent(`Error fetching ${type} location: ${error.message}`)
-      .openOn(map.value);
+      window.alert(`Error fetching ${type} location: ${error.message}`);
   }
 };
 
 
 const confirmLocation = () => {
+  // Check if any of the required values is null or empty
+  if (
+    !departureLocation.value ||
+    !destinationLocation.value ||
+    !departureDate.value ||
+    !departureTime.value ||
+    !availablePlace.value
+  ) {
+    // Show a popup to notify the user to fill all inputs
+    window.alert('Please fill in all required inputs.');
+    return; // Exit the function early if any input is missing
+  }
+
   // Add your logic for confirming the location
-  // You can customize this function as needed
+  // You can customize this part of the function as needed
   console.log('Location confirmed');
 };
+
 
 const resetLocation = () => {
   // Show a confirmation popup for resetting the location
@@ -174,7 +197,7 @@ onMounted(() => {
   map.value = L.map('map').setView([36.731538, 3.087544], 10);
 
   L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?access_token=${apiKey}`, {
-    attribution: '&copy;'
+    attribution: '&copy; IL-M1 2024'
   }).addTo(map.value);
 
 });
@@ -207,6 +230,10 @@ export default {
 /* Add these styles for proper positioning */
 .relative {
   position: relative;
+  height: 100vh; /* Set the height of the container to the full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #map {
@@ -217,7 +244,11 @@ export default {
 
 .input-field {
   width: calc(40% - 4rem); /* Adjust the width as needed */
-  margin-right: -2rem;
+  margin-right: 0;
+  position: relative;
+}
+
+.suggestion-item {
   position: relative;
 }
 
@@ -226,7 +257,7 @@ export default {
   top: 100%;
   left: 0;
   right: 0;
-  z-index: 20; /* Increase the z-index */
+  z-index: 20;
   background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 0.375rem;
@@ -249,6 +280,7 @@ export default {
   padding: 2;
   background-color: white;
   border: 1px solid #e2e8f0;
+  z-index: 40;
   border-radius: 0.375rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -256,4 +288,23 @@ export default {
 .text-red-500 {
   margin-top: 0.5rem;
 }
+
+.flex {
+  padding: 2rem; /* Set the desired padding around all corners */
+}
+
+/* Add the following style to center the content within the flex container */
+.flex > div {
+  margin: auto;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
+.input-container input {
+  flex: 1;
+}
+
 </style>
