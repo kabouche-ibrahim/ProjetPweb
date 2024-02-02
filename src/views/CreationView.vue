@@ -225,19 +225,17 @@ onMounted(() => {
   position: relative;
 }
 
-.suggestion-item {
-  position: relative;
-}
+
 
 .suggestions {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  z-index: 20;
   background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 0.375rem;
+  z-index: 20;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -245,6 +243,7 @@ onMounted(() => {
   padding: 0.5rem;
   cursor: pointer;
   border-bottom: 1px solid #e2e8f0;
+
 }
 
 .suggestion-item:last-child {
@@ -257,7 +256,6 @@ onMounted(() => {
   padding: 2;
   background-color: white;
   border: 1px solid #e2e8f0;
-  z-index: 40;
   border-radius: 0.375rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -276,10 +274,12 @@ onMounted(() => {
 .input-container {
   display: flex;
   align-items: center;
+  
 }
 
 .input-container input {
   flex: 1;
+  
 }
 
 </style>
