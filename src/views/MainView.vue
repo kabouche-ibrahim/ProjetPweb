@@ -2,15 +2,30 @@
     <div class="pt-8">
       <div class="flex items-center justify-between px-4">
         <div class="flex items-center">
-         <img src="@/views/logo.png" alt="Logo" class="h-12 mr-2 w-15"> 
-         <div @click="goToUserTables" class="cursor-pointer">
-          <h1 class="text-xl font-semibold">Covoiturage</h1>
-          <p class="ml-2 text-sm text-gray-500">Username</p>
+          <img src="@/views/logo.png" alt="Logo" class="w-16 h-16 mr-2"> 
+          <router-link to="/" class="cursor-pointer">
+            <h1 class="text-xl font-semibold">Covoiturage</h1>
+          </router-link>
         </div>
+        <div class="flex items-center">
+            <img src="@/views/profile-user.png" alt="Profile" class="w-10 h-10 mr-2">
+            <button @click="showLogoutConfirmation" class="text-sm text-gray-500">Username</button>
         </div>
-        <router-link to="/" class="px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none">
-          Logout
-        </router-link>
+        <!-- Logout Confirmation Popup -->
+        <div v-if="showLogoutConfirmationFlag" class="fixed right-0 mt-16 mr-4 top-5">
+          <div class="p-4 bg-white border rounded-md shadow-md">
+            <p>Logout?</p>
+            <div class="mt-4">
+              <button @click="logout" class="px-4 py-2 mr-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none">
+                Confirm
+              </button>
+              <button @click="cancelLogout" class="px-4 py-2 ml-2 text-white bg-gray-500 rounded-md hover:bg-gray-600 focus:outline-none"> 
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
       <div class="max-w-2xl mx-auto overflow-hidden text-left shadow sm:rounded-md ">
         <div class="px-4 py-5 bg-white sm:p-6">
@@ -207,8 +222,21 @@
   
   const router = useRouter();
 
-  const goToUserTables = () => {
-  router.push('/users'); // Navigate to UsersView
+  const showLogoutConfirmationFlag = ref(false);
+
+const showLogoutConfirmation = () => {
+  showLogoutConfirmationFlag.value = true;
+};
+
+const cancelLogout = () => {
+  showLogoutConfirmationFlag.value = false;
+};
+
+const logout = () => {
+  // Add logic for logout
+  showLogoutConfirmationFlag.value = false;
+  // Redirect to the logout page or perform logout actions
+  router.push('/');
 };
   
   
