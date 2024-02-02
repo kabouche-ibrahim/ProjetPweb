@@ -2,9 +2,11 @@
     <div class="pt-8">
       <div class="flex items-center justify-between px-4">
         <div class="flex items-center">
-         <img src="@/views/logo.png" alt="Logo" class="w-10 h-10 mr-2"> 
-          
+         <img src="@/views/logo.png" alt="Logo" class="h-12 mr-2 w-15"> 
+         <div @click="goToUserTables" class="cursor-pointer">
           <h1 class="text-xl font-semibold">Covoiturage</h1>
+          <p class="ml-2 text-sm text-gray-500">Username</p>
+        </div>
         </div>
         <router-link to="/" class="px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none">
           Logout
@@ -38,14 +40,14 @@
       </div>
   
       <!-- Table with Search Bar -->
-      <div class="max-w-full mx-auto mt-24 mb-10 overflow-y-auto" style="max-height: 300px;">
+      <div class="max-w-full mx-auto mt-24 overflow-y-auto mb-9" style="max-height: 400px;">
         <input
           type="text"
           class="float-right p-2 border rounded-md"
           placeholder="Search..."
         />
         <table class="w-full mt-4 border border-collapse border-gray-300">
-          <thead class="sticky top-0">
+          <thead class="sticky top-0 bg-white">
             <tr>
               <th class="p-3 text-center bg-gray-200 border-b">From</th>
               <th class="p-3 text-center bg-gray-200 border-b">To</th>
@@ -204,11 +206,15 @@
   
   
   const router = useRouter();
+
+  const goToUserTables = () => {
+  router.push('/users'); // Navigate to UsersView
+};
   
   
   
   const showFormFlag = ref(false);
-  const showConfirmationFlag = ref(false);
+  const showConfirmationFlag = ref(false); // Flag to show/hide confirmation popup
   
   const showForm = () => {
     showFormFlag.value = true;

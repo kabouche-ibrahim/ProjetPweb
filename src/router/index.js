@@ -6,6 +6,7 @@ import MainView from '../views/MainView.vue'
 import CreationView from '../views/CreationView.vue'
 import MyRidesView from '../views/MyRidesView.vue'
 import MyReservationView  from '../views/MyReservationView.vue'
+import UsersView from '../views/UsersView.vue'
 
 const router = createRouter({  
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,11 @@ const router = createRouter({
       path: '/myreservation',
       name: 'myreservation',
       component: MyReservationView
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: UsersView
     }
     
     
