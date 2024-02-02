@@ -30,17 +30,8 @@
       <input v-model="departureTime" type="time" placeholder="Departure Time" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
 
       <!-- Available Places Input -->
-      <div class="flex input-container">
-        <input
-          v-model="availablePlace"
-          type="text"
-          pattern="[1-9]\d*"
-          placeholder="Available Places"
-          class="p-2 bg-white border rounded shadow input-field"
-          @input="validateInput"
-        />
-        <p v-if="error" class="text-red-500">{{ error }}</p>
-      </div>
+      <input v-model="availablePlace" type="number" placeholder="Available Places" min="1"  class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
+
 
       <!-- Buttons -->
       <div class="absolute right-0 z-10 flex justify-center top-52">
@@ -90,6 +81,7 @@ const searchLocation = async (query, type) => {
       .setLatLng(map.value.getCenter()) // Set the popup location to the center of the map
       .setContent(`Error fetching location suggestions: ${error.message}<br>Check the network tab for more details.`)
       .openOn(map.value);
+
   }
 };
 
@@ -179,6 +171,7 @@ const resetLocation = () => {
     destinationLocation.value = '';
     departureDate.value = '';
     departureTime.value = '';
+    availablePlace.value= 1;
 
     map.value.setView([36.731538, 3.087544], 10);
     
@@ -207,22 +200,6 @@ onMounted(() => {
 
 </script>
 
-<script>
-export default {
-  data() {
-    return {
-      availablePlace: '',
-      error: '',
-    };
-  },
-  methods: {
-    validateInput() {
-      const isValid = /^[1-9]\d*$/.test(this.availablePlace);
-      this.error = isValid ? '' : 'Please enter a positive integer.';
-    },
-  },
-};
-</script>
 
 <style>
 @import 'leaflet/dist/leaflet.css';
@@ -238,12 +215,12 @@ export default {
 
 #map {
   z-index: 1;
-  width: 80%;
-  height: 600px; /* Set the height explicitly */
+  width: 90%;
+  height: 700px; /* Set the height explicitly */
 }
 
 .input-field {
-  width: calc(40% - 4rem); /* Adjust the width as needed */
+  width: calc(100% - 4rem); /* Adjust the width as needed */
   margin-right: 0;
   position: relative;
 }
@@ -285,9 +262,7 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.text-red-500 {
-  margin-top: 0.5rem;
-}
+
 
 .flex {
   padding: 2rem; /* Set the desired padding around all corners */
