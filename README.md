@@ -1,6 +1,12 @@
 # pwebcovoiturage
 
-This template should help get you started developing with Vue 3 in Vite.
+this is the frontend of the RideCrafters project, a web application for carpooling.
+
+## Technologies
+
+- [Vue 3](https://v3.vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
 ## Recommended IDE Setup
 
