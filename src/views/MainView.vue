@@ -8,7 +8,7 @@
           </router-link>
         </div>
         <div class="flex items-center">
-            <img src="@/views/profile-user.png" alt="Profile" class="w-10 h-10 mr-2">
+            <img src="@/views/profile-user.png" alt="Profile" class="w-12 h-12 mr-2">
             <button @click="showLogoutConfirmation" class="text-sm text-gray-500">Username</button>
         </div>
         <!-- Logout Confirmation Popup -->
