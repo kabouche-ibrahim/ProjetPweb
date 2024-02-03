@@ -3,12 +3,12 @@
       <div class="flex items-center justify-between px-4">
         <div class="flex items-center">
             <img src="@/views/logo.png" alt="Logo" class="w-32 h-32 mr-2"> 
-          
+          <router-link to="/" class="cursor-pointer">
             <h1 class="text-xl font-semibold">Covoiturage</h1>
-          
+          </router-link>
         </div>
         <div class="flex items-center">
-            <img src="@/views/profile-user.png" alt="Profile" class="w-12 h-12 mr-2">
+            <img src="@/views/profile-user.png" alt="Profile" claùss="w-12 h-12 mr-2">
             <button @click="showLogoutConfirmation" class="text-sm text-gray-500">Kabouche ibrahim mohamed ali</button>
         </div>
         <!-- Logout Confirmation Popup -->
