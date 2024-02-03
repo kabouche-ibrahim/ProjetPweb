@@ -25,13 +25,10 @@
 
       <!-- Departure Date Input -->
       <input v-model="departureDate" type="date" placeholder="Departure Date" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-28">
-
-      <!-- Departure Time Input -->
-      <input v-model="departureTime" type="time" placeholder="Departure Time" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
-  
-
       <!-- Available Places Input -->
       <input v-model="availablePlace" type="number" placeholder="Available Places" min="1"  class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
+            <!-- Departure Time Input -->
+            <input v-model="departureTime" type="time" placeholder="Departure Time" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
 
 
       <!-- Buttons -->
@@ -236,7 +233,7 @@ onMounted(() => {
   background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 0.375rem;
-  z-index: 20;
+  z-index: 30;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -258,6 +255,7 @@ onMounted(() => {
   background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 0.375rem;
+  z-index: 40;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
