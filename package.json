@@ -1,5 +1,9 @@
+<<<<<<< HEAD
   
   {
+=======
+{
+>>>>>>> feat_auth
   "name": "pwebcovoiturage",
   "version": "0.0.0",
   "private": true,

@@ -2,6 +2,7 @@
   <div class="pt-8">
     <div class="flex items-center justify-between px-4">
       <div class="flex items-center">
+<<<<<<< HEAD
         <img src="@/views/logo.png" alt="Logo" class="w-32 h-32 mr-2">
         <router-link to="/" class="cursor-pointer">
           <h1 class="text-xl font-semibold">Covoiturage</h1>
@@ -172,6 +173,179 @@
               class="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
               Reserve
             </button>
+=======
+        <img src="@/views/logo.png" alt="Logo" class="w-10 h-10 mr-2">
+
+        <h1 class="text-xl font-semibold">Covoiturage</h1>
+      </div>
+      <button @click="logout"
+        class="px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none">
+        Logout
+      </button>
+    </div>
+    <div class="max-w-2xl mx-auto overflow-hidden text-left shadow sm:rounded-md ">
+      <div class="px-4 py-5 bg-white sm:p-6">
+        <div class="flex justify-between">
+          <router-link to="/Creation" tag="button" type="button"
+            class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">
+            Create Ride
+          </router-link>
+          <router-link to="/MyRides" tag="button" type="button"
+            class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">
+            My Rides
+          </router-link>
+          <router-link to="/MyReservation" tag="button" type="button"
+            class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">
+            My Reservations
+          </router-link>
+          <button
+            class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">
+            Find A Ride
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table with Search Bar -->
+    <div class="max-w-full mx-auto mt-24 mb-10 overflow-y-auto" style="max-height: 300px;">
+      <input type="text" class="float-right p-2 border rounded-md" placeholder="Search..." />
+      <table class="w-full mt-4 border border-collapse border-gray-300">
+        <thead class="sticky top-0">
+          <tr>
+            <th class="p-3 text-center bg-gray-200 border-b">From</th>
+            <th class="p-3 text-center bg-gray-200 border-b">To</th>
+            <th class="p-3 text-center bg-gray-200 border-b">Departure Date</th>
+            <th class="p-3 text-center bg-gray-200 border-b">Time</th>
+            <th class="p-3 text-center bg-gray-200 border-b">Available Seats</th>
+            <th class="p-3 text-center bg-gray-200 border-b">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Add more rows as needed -->
+          <tr>
+            <td class="p-3 text-center border">Algiers</td>
+            <td class="p-3 text-center border">Blida</td>
+            <td class="p-3 text-center border">2024-01-27</td>
+            <td class="p-3 text-center border">15:00</td>
+            <td class="p-3 text-center border">4</td>
+            <td class="p-3 text-center border">
+              <button @click="showForm"
+                class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                View Details
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="p-3 text-center border">Algiers</td>
+            <td class="p-3 text-center border">Blida</td>
+            <td class="p-3 text-center border">2024-01-27</td>
+            <td class="p-3 text-center border">15:00</td>
+            <td class="p-3 text-center border">4</td>
+            <td class="p-3 text-center border">
+              <button @click="showForm"
+                class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                View Details
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="p-3 text-center border">Algiers</td>
+            <td class="p-3 text-center border">Blida</td>
+            <td class="p-3 text-center border">2024-01-27</td>
+            <td class="p-3 text-center border">15:00</td>
+            <td class="p-3 text-center border">4</td>
+            <td class="p-3 text-center border">
+              <button @click="showForm"
+                class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                View Details
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="p-3 text-center border">Algiers</td>
+            <td class="p-3 text-center border">Blida</td>
+            <td class="p-3 text-center border">2024-01-27</td>
+            <td class="p-3 text-center border">15:00</td>
+            <td class="p-3 text-center border">4</td>
+            <td class="p-3 text-center border">
+              <button @click="showForm"
+                class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                View Details
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="p-3 text-center border">Algiers</td>
+            <td class="p-3 text-center border">Blida</td>
+            <td class="p-3 text-center border">2024-01-27</td>
+            <td class="p-3 text-center border">15:00</td>
+            <td class="p-3 text-center border">4</td>
+            <td class="p-3 text-center border">
+              <button @click="showForm"
+                class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                View Details
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="p-3 text-center border">Algiers</td>
+            <td class="p-3 text-center border">Blida</td>
+            <td class="p-3 text-center border">2024-01-27</td>
+            <td class="p-3 text-center border">15:00</td>
+            <td class="p-3 text-center border">4</td>
+            <td class="p-3 text-center border">
+              <button @click="showForm"
+                class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                View Details
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="p-3 text-center border">Algiers</td>
+            <td class="p-3 text-center border">Blida</td>
+            <td class="p-3 text-center border">2024-01-27</td>
+            <td class="p-3 text-center border">15:00</td>
+            <td class="p-3 text-center border">4</td>
+            <td class="p-3 text-center border">
+              <button @click="showForm"
+                class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                View Details
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Form for Selected Ride -->
+    <div v-if="showFormFlag"
+      class="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm">
+      <div class="max-w-xl p-8 mx-auto bg-white rounded-md shadow-md">
+        <h2 class="mb-4 text-xl font-semibold">Driver Information</h2>
+        <div>
+          <div>
+            <p>Driver's Name: John Doe</p>
+            <p>Car Name: Sedan</p>
+            <p>Car Color: Blue</p>
+            <p>Car Year: 2005</p>
+            <p>Matricule: ABC123</p>
+          </div>
+
+          <h3 class="mt-4 text-lg font-semibold">Meeting Place</h3>
+
+
+
+
+          <h3 class="mt-4 text-lg font-semibold">Destination</h3>
+          <p>Alger</p>
+          <p>Available Seats: 4</p>
+
+          <div class="mt-4">
+            <button @click="showConfirmation"
+              class="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
+              Reserve
+            </button>
+>>>>>>> feat_auth
             <button @click="hideForm"
               class="px-4 py-2 text-white bg-gray-500 rounded-md hover:bg-gray-600 focus:outline-none">
               Close
@@ -207,6 +381,7 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+<<<<<<< HEAD
 const router = useRouter();
 const searchQuery = ref('');
 const tableHeaders = ['From', 'To', 'Departure Date', 'Time', 'Available Seats'];
@@ -278,10 +453,17 @@ const logout = () => {
   // Redirect to the logout page or perform logout actions
   router.push('/');
 };
+=======
+
+const router = useRouter();
+
+
+>>>>>>> feat_auth
 
 const showFormFlag = ref(false);
 const showConfirmationFlag = ref(false);
 
+<<<<<<< HEAD
 const showForm = async (row) => {
 
 
@@ -295,6 +477,9 @@ const showForm = async (row) => {
     console.error('Error fetching data:', error);
   }
 
+=======
+const showForm = () => {
+>>>>>>> feat_auth
   showFormFlag.value = true;
 };
 
@@ -307,11 +492,29 @@ const showConfirmation = () => {
 };
 
 const confirmReservation = () => {
+<<<<<<< HEAD
   showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false; showConfirmationFlag.value = false;
+=======
+  // Add logic for confirming reservation
+  showConfirmationFlag.value = false;
+>>>>>>> feat_auth
 };
 
 const cancelReservation = () => {
   showConfirmationFlag.value = false;
 };
+<<<<<<< HEAD
+=======
+
+const logout = () => {
+  localStorage.removeItem('token');
+  router.push({
+    name: 'login'
+  });
+};
+
+
+
+>>>>>>> feat_auth
 </script>
   
