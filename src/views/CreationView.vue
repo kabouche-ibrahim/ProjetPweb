@@ -28,6 +28,7 @@
 
       <!-- Departure Time Input -->
       <input v-model="departureTime" type="time" placeholder="Departure Time" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
+  
 
       <!-- Available Places Input -->
       <input v-model="availablePlace" type="number" placeholder="Available Places" min="1"  class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
