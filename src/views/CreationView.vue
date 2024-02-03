@@ -58,6 +58,8 @@ const departureTime = ref('');
 const departureSuggestions = ref([]);
 const destinationSuggestions = ref([]);
 const availablePlace = ref('');
+var destination_location = null;
+var departure_location = null;
 
 const searchLocation = async (query, type) => {
   if (!query) return;
@@ -89,11 +91,13 @@ const selectSuggestion = (suggestion, type) => {
   if (type === 'departure') {
     departureLocation.value = suggestion.display_name;
     departureSuggestions.value = [];
+    departure_location=location;
   } else {
     destinationLocation.value = suggestion.display_name;
     destinationSuggestions.value = [];
+    destination_location=location;
   }
-  
+  console.log(departure_location);
   placeMarker(location, type);
 
 };  
@@ -170,6 +174,8 @@ const resetLocation = () => {
     departureDate.value = '';
     departureTime.value = '';
     availablePlace.value= 1;
+    departure_location=null;
+    destination_location=null;
 
     map.value.setView([36.731538, 3.087544], 10);
     
