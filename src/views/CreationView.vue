@@ -1,45 +1,49 @@
 <template>
-  <div class="flex">
-    <div class="relative w-2/3 h-screen">
+  <div class="flex h-screen">
+    <!-- Map Container -->
+    <div class="w-2/3 relative">
       <div id="map" class="w-full h-full"></div>
+    </div>
 
-      <!-- Departure Location Input and Suggestions -->
-      <div class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-4">
-        <input v-model="departureLocation" @input="searchLocation(departureLocation, 'departure')" placeholder="Departure Location">
-        <div v-for="(suggestion, index) in departureSuggestions" :key="index" class="z-20 suggestion-item">
-          <button @click="selectSuggestion(suggestion, 'departure')" class="block w-full px-2 py-1 text-left hover:bg-gray-200">
-            {{ suggestion.display_name }}
-          </button>
+    <!-- Form Container -->
+    <div class="w-1/3 p-4">
+      <!-- Departure Location -->
+      <div>
+        <input v-model="departureLocation" @input="searchLocation(departureLocation, 'departure')" placeholder="Departure Location" class="w-full mb-2 p-2 border border-gray-300 rounded-md">
+        <div v-if="departureSuggestions.length > 0" class="relative">
+        <div v-if="departureSuggestions.length > 0" class="z-10 mt-1 w-full bg-white rounded-md shadow-lg">
+          <div v-for="(suggestion, index) in departureSuggestions" :key="index" class="px-4 py-2 cursor-pointer hover:bg-gray-100" @click="selectSuggestion(suggestion, 'departure')">{{ suggestion.display_name }}</div>
+        </div>
         </div>
       </div>
 
-      <!-- Destination Location Input and Suggestions -->
-      <div class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-16">
-        <input v-model="destinationLocation" @input="searchLocation(destinationLocation, 'destination')" placeholder="Destination Location">
-        <div v-for="(suggestion, index) in destinationSuggestions" :key="index" class="z-20 suggestion-item">
-          <button @click="selectSuggestion(suggestion, 'destination')" class="block w-full px-2 py-1 text-left hover:bg-gray-200">
-            {{ suggestion.display_name }}
-          </button>
+      <!-- Destination Location -->
+      <div>
+        <input v-model="destinationLocation" @input="searchLocation(destinationLocation, 'destination')" placeholder="Destination Location" class="w-full mb-2 p-2 border border-gray-300 rounded-md">
+        <div v-if="destinationSuggestions.length > 0" class="relative">
+        <div v-if="destinationSuggestions.length > 0" class="z-10 mt-1 w-full bg-white rounded-md shadow-lg">
+          <div v-for="(suggestion, index) in destinationSuggestions" :key="index" class="px-4 py-2 cursor-pointer hover:bg-gray-100" @click="selectSuggestion(suggestion, 'destination')">{{ suggestion.display_name }}</div>
+        </div>
         </div>
       </div>
 
-      <!-- Departure Date Input -->
-      <input v-model="departureDate" type="date" placeholder="Departure Date" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-28">
-      <!-- Available Places Input -->
-      <input v-model="availablePlace" type="number" placeholder="Available Places" min="1"  class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
-            <!-- Departure Time Input -->
-            <input v-model="departureTime" type="time" placeholder="Departure Time" class="absolute right-0 z-10 p-2 bg-white border rounded shadow input-field top-40">
+      <!-- Departure Date -->
+      <input v-model="departureDate" type="date" placeholder="Departure Date" class="w-full mb-2 p-2 border border-gray-300 rounded-md">
 
+      <!-- Departure Time -->
+      <input v-model="departureTime" type="time" placeholder="Departure Time" class="w-full mb-2 p-2 border border-gray-300 rounded-md">
+
+      <!-- Available Places -->
+      <div>
+        <input v-model="availablePlace" type="text" pattern="[1-9]\d*" placeholder="Available Places" @input="validateInput" class="w-full mb-2 p-2 border border-gray-300 rounded-md">
+        <p v-if="error" class="text-red-500">{{ error }}</p>
+      </div>
 
       <!-- Buttons -->
-      <div class="absolute right-0 z-10 flex justify-center top-52">
+      <div class="mt-4">
         <button @click="confirmLocation" class="px-4 py-2 mr-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">Confirm</button>
         <button @click="resetLocation" class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">Reset</button>
       </div>
-    </div>
-
-    <div class="w-1/3 p-6">
-      <!-- Other content in the right column -->
     </div>
   </div>
 </template>
@@ -205,7 +209,7 @@ onMounted(() => {
 </script>
 
 
-<style>
+<!-- <style>
 @import 'leaflet/dist/leaflet.css';
 
 /* Add these styles for proper positioning */
@@ -287,4 +291,4 @@ onMounted(() => {
   
 }
 
-</style>
+</style> -->
