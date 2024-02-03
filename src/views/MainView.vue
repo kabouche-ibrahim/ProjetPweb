@@ -56,104 +56,28 @@
   
       <!-- Table with Search Bar -->
       <div class="max-w-full mx-auto mt-24 overflow-y-auto mb-9" style="max-height: 400px;">
-        <input
-          type="text"
-          class="float-right p-2 border rounded-md"
-          placeholder="Search..."
-        />
+      <input
+        v-model="searchQuery"
+        type="text"
+        class="float-right p-2 border rounded-md"
+        placeholder="Search..."
+      />
         <table class="w-full mt-4 border border-collapse border-gray-300">
           <thead class="sticky top-0 bg-white">
             <tr>
-              <th class="p-3 text-center bg-gray-200 border-b">From</th>
-              <th class="p-3 text-center bg-gray-200 border-b">To</th>
-              <th class="p-3 text-center bg-gray-200 border-b">Departure Date</th>
-              <th class="p-3 text-center bg-gray-200 border-b">Time</th>
-              <th class="p-3 text-center bg-gray-200 border-b">Available Seats</th>
+              <th v-for="(header, index) in tableHeaders" :key="index" class="p-3 text-center bg-gray-200 border-b">
+                {{ header }}
+              </th>
               <th class="p-3 text-center bg-gray-200 border-b">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <!-- Add more rows as needed -->
-            <tr>
-              <td class="p-3 text-center border">Algiers</td>
-              <td class="p-3 text-center border">Blida</td>
-              <td class="p-3 text-center border">2024-01-27</td>
-              <td class="p-3 text-center border">15:00</td>
-              <td class="p-3 text-center border">4</td>
-              <td class="p-3 text-center border">
-                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
-                  View Details
-                </button>
+            <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
+              <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="p-3 text-center border">
+                {{ cell }}
               </td>
-            </tr>
-            <tr>
-              <td class="p-3 text-center border">Algiers</td>
-              <td class="p-3 text-center border">Blida</td>
-              <td class="p-3 text-center border">2024-01-27</td>
-              <td class="p-3 text-center border">15:00</td>
-              <td class="p-3 text-center border">4</td>
               <td class="p-3 text-center border">
-                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td class="p-3 text-center border">Algiers</td>
-              <td class="p-3 text-center border">Blida</td>
-              <td class="p-3 text-center border">2024-01-27</td>
-              <td class="p-3 text-center border">15:00</td>
-              <td class="p-3 text-center border">4</td>
-              <td class="p-3 text-center border">
-                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td class="p-3 text-center border">Algiers</td>
-              <td class="p-3 text-center border">Blida</td>
-              <td class="p-3 text-center border">2024-01-27</td>
-              <td class="p-3 text-center border">15:00</td>
-              <td class="p-3 text-center border">4</td>
-              <td class="p-3 text-center border">
-                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td class="p-3 text-center border">Algiers</td>
-              <td class="p-3 text-center border">Blida</td>
-              <td class="p-3 text-center border">2024-01-27</td>
-              <td class="p-3 text-center border">15:00</td>
-              <td class="p-3 text-center border">4</td>
-              <td class="p-3 text-center border">
-                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td class="p-3 text-center border">Algiers</td>
-              <td class="p-3 text-center border">Blida</td>
-              <td class="p-3 text-center border">2024-01-27</td>
-              <td class="p-3 text-center border">15:00</td>
-              <td class="p-3 text-center border">4</td>
-              <td class="p-3 text-center border">
-                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td class="p-3 text-center border">Algiers</td>
-              <td class="p-3 text-center border">Blida</td>
-              <td class="p-3 text-center border">2024-01-27</td>
-              <td class="p-3 text-center border">15:00</td>
-              <td class="p-3 text-center border">4</td>
-              <td class="p-3 text-center border">
-                <button @click="showForm" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
+                <button @click="showForm(row)" class="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-600 focus:outline-none">
                   View Details
                 </button>
               </td>
@@ -221,23 +145,41 @@
   
   
   const router = useRouter();
+  const searchQuery = ref('');
+  const tableHeaders = ['From', 'To', 'Departure Date', 'Time', 'Available Seats'];
+  const tableData = ref([]);
+
+  const fetchData = async () => {
+    try {
+      // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint to fetch data
+      const response = await fetch('YOUR_API_ENDPOINT');
+      const data = await response.json();
+      tableData.value = data; // Assuming the data is an array of arrays or objects
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  onMounted(() => {
+    fetchData();
+  });
 
   const showLogoutConfirmationFlag = ref(false);
 
-const showLogoutConfirmation = () => {
-  showLogoutConfirmationFlag.value = true;
-};
+  const showLogoutConfirmation = () => {
+    showLogoutConfirmationFlag.value = true;
+  };
 
-const cancelLogout = () => {
-  showLogoutConfirmationFlag.value = false;
-};
+  const cancelLogout = () => {
+    showLogoutConfirmationFlag.value = false;
+  };
 
-const logout = () => {
-  // Add logic for logout
-  showLogoutConfirmationFlag.value = false;
-  // Redirect to the logout page or perform logout actions
-  router.push('/');
-};
+  const logout = () => {
+    // Add logic for logout
+    showLogoutConfirmationFlag.value = false;
+    // Redirect to the logout page or perform logout actions
+    router.push('/');
+  };
   
   
   
