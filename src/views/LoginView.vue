@@ -58,6 +58,9 @@ const getFormattedCredentials = () => {
 const handleLogin = () => {
   axios.post('http://localhost:8000/api/login', getFormattedCredentials())
     .then((response) => {
+      if (response.status !== 200) {
+        throw new Error('Invalid credentials');
+      }
       // Store token in local storage
       localStorage.setItem('token', response.data.token);
       // Redirect to main page or perform other actions
