@@ -3,9 +3,9 @@
       <div class="flex items-center justify-between px-4">
         <div class="flex items-center">
             <img src="@/views/logo.png" alt="Logo" class="w-32 h-32 mr-2"> 
-          <router-link to="/" class="cursor-pointer">
+          
             <h1 class="text-xl font-semibold">Covoiturage</h1>
-          </router-link>
+          
         </div>
         <div class="flex items-center">
             <img src="@/views/profile-user.png" alt="Profile" class="w-12 h-12 mr-2">
@@ -27,27 +27,23 @@
         </div>
 
       </div>
-      <div class="max-w-2xl mx-auto overflow-hidden text-left shadow sm:rounded-md ">
+      <div class="max-w-2xl mx-auto overflow-hidden text-left shadow sm:rounded-md">
         <div class="px-4 py-5 bg-white sm:p-6">
           <div class="flex justify-between">
-            <router-link to="/Creation" tag="button" type="button"
-                class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none"
-            >
-                Create Ride
+            <router-link to="/Creation" tag="button" type="button" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">
+              <img src="@/views/add.png" alt="Add" class="w-5 h-5 mr-2" style="filter: invert(100%);">
+              Create Ride
             </router-link>
-            <router-link to="/MyRides" tag="button" type="button"
-              class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none"
-            >
+            <router-link to="/MyRides" tag="button" type="button" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">
+              <img src="@/views/list.png" alt="Add" class="w-5 h-5 mr-2" style="filter: invert(100%);">
               My Rides
             </router-link>
-            <router-link to="/MyReservation" tag="button" type="button"
-              class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none"
-            >
+            <router-link to="/MyReservation" tag="button" type="button" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">
+              <img src="@/views/reservation.png" alt="Add" class="w-5 h-5 mr-2" style="filter: invert(100%);">
               My Reservations
             </router-link>
-            <button
-              class="px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none"
-            >
+            <button class="flex items-center px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-600 focus:outline-none">
+              <img src="@/views/refresh.png" alt="Add" class="w-5 h-5 mr-2" style="filter: invert(100%);">
               Find A Ride
             </button>
           </div>
@@ -56,12 +52,63 @@
   
       <!-- Table with Search Bar -->
       <div class="max-w-full mx-auto mt-24 overflow-y-auto mb-9" style="max-height: 400px;">
-      <input
-        v-model="searchQuery"
-        type="text"
-        class="float-right p-2 border rounded-md"
-        placeholder="Search..."
-      />
+      <div class="flex justify-end">
+        <input
+          v-model="searchQuery.from"
+          type="text"
+          class="mr-2 p-2 border rounded-md"
+          placeholder="From"
+        />
+        <input
+          v-model="searchQuery.to"
+          type="text"
+          class="mr-2 p-2 border rounded-md"
+          placeholder="To"
+        />
+        <button @click="showFilterPopup" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none">
+          <img src="@/views/filter.png" alt="Filter" class="w-5 h-5 mr-2" style="filter: invert(100%);">
+          Filter
+        </button>
+      </div>
+      <!-- Filter Popup -->
+      <div v-if="showFilterPopupFlag" class="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm z-50">
+        <div class="max-w-md p-8 mx-auto bg-white rounded-md shadow-md">
+          <h2 class="mb-4 text-xl font-semibold">Filter Options</h2>
+          
+          <!-- Filter by Available Seats -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Available Seats</label>
+            <div class="flex items-center">
+              <input v-model="filterOptions.minSeats" type="number" class="w-16 p-2 border rounded-md" placeholder="Min">
+              <span class="mx-2">to</span>
+              <input v-model="filterOptions.maxSeats" type="number" class="w-16 p-2 border rounded-md" placeholder="Max">
+            </div>
+          </div>
+          
+          <!-- Filter by Time -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Time</label>
+            <input v-model="filterOptions.time" type="text" class="w-full p-2 border rounded-md" placeholder="Enter time">
+          </div>
+          
+          <!-- Filter by Date -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Date</label>
+            <input v-model="filterOptions.date" type="date" class="w-full p-2 border rounded-md">
+          </div>
+
+          <div class="mt-4">
+            <button @click="applyFilters" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none">
+              Apply Filters
+            </button>
+            <button @click="cancelFilters" class="px-4 py-2 ml-2 text-white bg-gray-500 rounded-md hover:bg-gray-600 focus:outline-none">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      
         <table class="w-full mt-4 border border-collapse border-gray-300">
           <thead class="sticky top-0 bg-white">
             <tr>
@@ -143,37 +190,52 @@
   import { onMounted, ref } from 'vue';
   import { useRouter } from 'vue-router';
   
-  
   const router = useRouter();
   const searchQuery = ref('');
   const tableHeaders = ['From', 'To', 'Departure Date', 'Time', 'Available Seats'];
   const tableData = ref([]);
-
-  const fetchData = async () => {
-    try {
-      // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint to fetch data
-      const response = await fetch('YOUR_API_ENDPOINT');
-      const data = await response.json();
-      tableData.value = data; // Assuming the data is an array of arrays or objects
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+  
+  const filterOptions = ref({
+    minSeats: null,
+    maxSeats: null,
+    time: '',
+    date: ''
+  });
+  
+  const showFilterPopupFlag = ref(false);
+  
+  const applyFilters = () => {
+    // Implement filter logic using filterOptions
+    showFilterPopupFlag.value = false;
+    console.log('Filters applied:', filterOptions.value); // Check if the filters are being applied
   };
-
+  
+  const cancelFilters = () => {
+    // Reset filter options if needed
+    filterOptions.value = {
+      minSeats: null,
+      maxSeats: null,
+      time: '',
+      date: ''
+    };
+  
+    showFilterPopupFlag.value = false;
+  };
+  
   onMounted(() => {
     fetchData();
   });
-
+  
   const showLogoutConfirmationFlag = ref(false);
-
+  
   const showLogoutConfirmation = () => {
     showLogoutConfirmationFlag.value = true;
   };
-
+  
   const cancelLogout = () => {
     showLogoutConfirmationFlag.value = false;
   };
-
+  
   const logout = () => {
     // Add logic for logout
     showLogoutConfirmationFlag.value = false;
@@ -181,10 +243,8 @@
     router.push('/');
   };
   
-  
-  
   const showFormFlag = ref(false);
-  const showConfirmationFlag = ref(false); // Flag to show/hide confirmation popup
+  const showConfirmationFlag = ref(false);
   
   const showForm = () => {
     showFormFlag.value = true;
@@ -199,17 +259,11 @@
   };
   
   const confirmReservation = () => {
-    // Add logic for confirming reservation
     showConfirmationFlag.value = false;
   };
   
   const cancelReservation = () => {
     showConfirmationFlag.value = false;
   };
-  
-  
-
-  
-  
   </script>
   
