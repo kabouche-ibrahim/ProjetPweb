@@ -8,7 +8,7 @@
           </router-link>
         </div>
         <div class="flex items-center">
-            <img src="@/views/profile-user.png" alt="Profile" claùss="w-12 h-12 mr-2">
+            <img src="@/views/profile-user.png" alt="Profile" class="w-12 h-12 mr-2">
             <button @click="showLogoutConfirmation" class="text-sm text-gray-500">Kabouche ibrahim mohamed ali</button>
         </div>
         <!-- Logout Confirmation Popup -->
@@ -59,16 +59,27 @@
           class="mr-2 p-2 border rounded-md"
           placeholder="From"
         />
+
+        <button @click="performSearch" class="flex items-center px-2 py-2 mr-2 text-sm text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none">
+          <img src="@/views/search.png" alt="Search" class="w-5 h-5 mr-2" style="filter: invert(100%);">
+        </button>
+
         <input
           v-model="searchQuery.to"
           type="text"
           class="mr-2 p-2 border rounded-md"
           placeholder="To"
         />
+
+        <button @click="performSearch" class="flex items-center px-2 py-2 mr-2 text-sm text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none">
+          <img src="@/views/search.png" alt="Search" class="w-5 h-5 mr-2" style="filter: invert(100%);">
+        </button>
+
         <button @click="showFilterPopup" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none">
           <img src="@/views/filter.png" alt="Filter" class="w-5 h-5 mr-2" style="filter: invert(100%);">
           Filter
         </button>
+
       </div>
       <!-- Filter Popup -->
       <div v-if="showFilterPopupFlag" class="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm z-50">
@@ -189,27 +200,27 @@
   <script setup>
   import { onMounted, ref } from 'vue';
   import { useRouter } from 'vue-router';
-  
+
   const router = useRouter();
   const searchQuery = ref('');
   const tableHeaders = ['From', 'To', 'Departure Date', 'Time', 'Available Seats'];
   const tableData = ref([]);
-  
+
   const filterOptions = ref({
     minSeats: null,
     maxSeats: null,
     time: '',
     date: ''
   });
-  
+
   const showFilterPopupFlag = ref(false);
-  
+
   const applyFilters = () => {
     // Implement filter logic using filterOptions
     showFilterPopupFlag.value = false;
     console.log('Filters applied:', filterOptions.value); // Check if the filters are being applied
   };
-  
+
   const cancelFilters = () => {
     // Reset filter options if needed
     filterOptions.value = {
@@ -218,50 +229,55 @@
       time: '',
       date: ''
     };
-  
+
     showFilterPopupFlag.value = false;
   };
-  
+
+  const performSearch = () => {
+    // Implement search logic using searchQuery
+    console.log('Performing search:', searchQuery.value); // Check if the search is being performed
+  };
+
   onMounted(() => {
     fetchData();
   });
-  
+
   const showLogoutConfirmationFlag = ref(false);
-  
+
   const showLogoutConfirmation = () => {
     showLogoutConfirmationFlag.value = true;
   };
-  
+
   const cancelLogout = () => {
     showLogoutConfirmationFlag.value = false;
   };
-  
+
   const logout = () => {
     // Add logic for logout
     showLogoutConfirmationFlag.value = false;
     // Redirect to the logout page or perform logout actions
     router.push('/');
   };
-  
+
   const showFormFlag = ref(false);
   const showConfirmationFlag = ref(false);
-  
+
   const showForm = () => {
     showFormFlag.value = true;
   };
-  
+
   const hideForm = () => {
     showFormFlag.value = false;
   };
-  
+
   const showConfirmation = () => {
     showConfirmationFlag.value = true;
   };
-  
+
   const confirmReservation = () => {
     showConfirmationFlag.value = false;
   };
-  
+
   const cancelReservation = () => {
     showConfirmationFlag.value = false;
   };
