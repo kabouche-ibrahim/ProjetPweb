@@ -51,6 +51,9 @@
 <script setup>
 import { reactive } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const credentials = reactive({
   firstname: null,
@@ -62,21 +65,23 @@ const credentials = reactive({
   student_id: null // Added field
 });
 
-const handleRegister = () => {
-  const formattedCredentials = {
-    firstname: credentials.firstname,
-    lastname: credentials.lastname,
+const getFormattedCredentials = () => {
+  return {
+    first_name: credentials.firstname,
+    last_name: credentials.lastname,
     email: credentials.email,
     password: credentials.password,
-    confirmPassword: credentials.confirmPassword,
     phone_number: credentials.phone_number, // Include phone_number
     student_id: credentials.student_id // Include student_id
-  };
 
-  axios.post('http://localhost:8000/api/register', formattedCredentials)
+  }
+}
+const handleRegister = () => {
+  axios.post('http://localhost:8000/api/login', getFormattedCredentials())
     .then((response) => {
+      console.log(response);
       if (response.status !== 200) {
-        throw new Error('Invalid credentials');
+        throw new Error(response.data.message)
       }
       // Store token in local storage
       localStorage.setItem('token', response.data.token);
@@ -84,7 +89,7 @@ const handleRegister = () => {
       router.push({ name: 'main' });
     })
     .catch((error) => {
-      console.error("Registration failed:", error.response.data.message);
+      console.error("Registration failed:", error);
       // Handle registration error if needed
     });
 };
