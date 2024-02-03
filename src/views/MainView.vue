@@ -59,7 +59,7 @@
           class="mr-2 p-2 border rounded-md"
           placeholder="From"
         />
-
+        
         <button @click="performSearch" class="flex items-center px-2 py-2 mr-2 text-sm text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none">
           <img src="@/views/search.png" alt="Search" class="w-5 h-5 mr-2" style="filter: invert(100%);">
         </button>
@@ -236,6 +236,19 @@
   const performSearch = () => {
     // Implement search logic using searchQuery
     console.log('Performing search:', searchQuery.value); // Check if the search is being performed
+  };
+
+  
+
+  const fetchData = async () => {
+    try {
+      // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint to fetch data
+      const response = await fetch('YOUR_API_ENDPOINT');
+      const data = await response.json();
+      tableData.value = data; // Assuming the data is an array of arrays or objects
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   onMounted(() => {
